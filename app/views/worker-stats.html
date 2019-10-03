@@ -1,0 +1,35 @@
+<div class="uk-width-1-1 uk-container-center uk-margin-large-bottom">
+    <?php if (count($stats) === 0): ?>
+        <div class="uk-alert uk-alert-info uk-text-center">
+            Ancora nessuna linea ha lavorato.
+        </div>
+    <?php else: ?>
+        <h1 class="uk-margin-large-bottom">Statistiche linee preparazione</h1>
+        <table class="uk-table uk-margin-large-bottom">
+            <thead>
+                <tr>
+                    <th>Giorno</th>
+                    <th>N° linea</th>
+                    <th>Lavoratore</th>
+                    <th>Piatti preparati</th>
+                    <th>Tempo complessivo di lavoro</th>
+                    <th>Clienti serviti</th>
+                    <th>Valore medio piatti preparati</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($stats as $stat): ?>
+                    <tr>
+                        <td><?= $stat['giorno'] ?></td>
+                        <td><?= $stat['linea'] ?></td>
+                        <td><?= $stat['nome'] ?> <?= $stat['cognome'] ?></td>
+                        <td><?= $stat['num_piatti'] ?></td>
+                        <td><?= $stat['tempo_lavoro'] ?></td>
+                        <td><?= $stat['clienti_serviti'] ?></td>
+                        <td><?= $stat['val_medio_piatti'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>

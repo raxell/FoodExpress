@@ -1,0 +1,35 @@
+<div class="uk-width-1-1 uk-container-center uk-margin-large-bottom">
+    <?php if (count($orders) === 0): ?>
+        <div class="uk-alert uk-alert-info uk-text-center">
+            Ancora nessun ordine effettuato.
+        </div>
+    <?php else: ?>
+        <h1>Storico ordini effettuati</h1>
+        <p class="uk-margin-large-bottom">
+            [<strong class="uk-text-success">verde</strong> = ordini evasi, <strong class="uk-text-warning">giallo</strong> = ordini in attesa]
+        </p>
+        <?php foreach ($orders as $order): ?>
+            <table class="uk-table uk-margin-large-bottom uk-alert-<?php if (!in_array($order['id'], array_column($pending_orders, 'ordine'))) echo 'success'; else echo 'warning'; ?>">
+                <caption>Ordine #<?= $order['id'] ?> del <?= $order['data'] ?></caption>
+                <thead>
+                    <tr>
+                        <th class="uk-width-1-2">Piatto</th>
+                        <th class="uk-width-1-4">Quantità</th>
+                        <th class="uk-width-1-4">Costo unitario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dishes as $dish): ?>
+                        <?php if ($dish['ordine_id'] === $order['id']): ?>
+                            <tr>
+                                <td><?= $dish['titolo'] ?></td>
+                                <td><?= $dish['quantita'] ?></td>
+                                <td><?= $dish['prezzo'] ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>

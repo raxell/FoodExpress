@@ -1,0 +1,33 @@
+<div class="uk-width-1-1 uk-container-center uk-margin-large-bottom uk-text-center">
+    <?php if (isset($_SESSION['slim.flash']['success_message'])): ?>
+        <div class="uk-alert uk-alert-success uk-display-inline-block"><?= $_SESSION['slim.flash']['success_message'] ?></div>
+    <?php endif; ?>
+
+    <form class="uk-form uk-form-horizontal" method="post" action="<?= $url_for('set_workers') ?>">
+        <div class="uk-form-row uk-text-center">
+            Giorno per cui si vuole impostare le linee di preparazione
+            <div class="uk-form-icon uk-margin-left">
+                <i class="uk-icon-calendar"></i><input type="date" name="date" placeholder="aaaa-mm-gg" required>
+            </div>
+        </div>
+
+        <ul class="uk-grid uk-margin-large-top uk-margin-bottom" data-uk-grid-margin>
+            <?php foreach ($workers as $worker): ?>
+                <li class="uk-width-medium-1-4">
+                    <div class="uk-panel uk-panel-box">
+                        <div class="uk-panel-title">
+                            <label class="uk-display-block">
+                                <input type="checkbox" name="worker[]" value="<?= $worker['lavoratore_id'] ?>">
+                                <?= $worker['nome'] ?> <?= $worker['cognome'] ?>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <div class="uk-form-row uk-align-right">
+            <button class="uk-button uk-button-primary" type="submit">Salva</button>
+        </div>
+    </form>
+</div>

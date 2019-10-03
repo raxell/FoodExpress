@@ -1,0 +1,36 @@
+<div class="uk-width-1-1 uk-container-center uk-margin-large-bottom uk-text-center">
+    <?php if (isset($_SESSION['slim.flash']['error_message'])): ?>
+        <div class="uk-alert uk-alert-danger uk-display-inline-block"><?= $_SESSION['slim.flash']['error_message'] ?></div>
+    <?php elseif (isset($_SESSION['slim.flash']['success_message'])): ?>
+        <div class="uk-alert uk-alert-success uk-display-inline-block"><?= $_SESSION['slim.flash']['success_message'] ?></div>
+    <?php endif; ?>
+
+    <form class="uk-form uk-form-horizontal uk-margin-large-bottom" method="post" action="<?= $url_for('set_delivery_areas') ?>">
+        <fieldset class="uk-display-inline-block">
+            <legend class="uk-text-left">Aggiungi area consegna</legend>
+
+            <input type="text" name="cap" placeholder="CAP" required>
+            <button class="uk-button uk-button-primary" type="submit">Aggiungi</button>
+        </fieldset>
+    </form>
+
+    <?php if (count($areas) > 0): ?>
+        <table class="uk-table uk-text-left">
+        <caption>CAP per cui è prevista la consegna</caption>
+        <thead>
+            <tr>
+                <th>CAP</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($areas as $area): ?>
+            <tr>
+                <td><?= $area['cap'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    <?php else: ?>
+        Nessuna area di consegna è stata ancora impostata.
+    <?php endif; ?>
+</table>
+</div>

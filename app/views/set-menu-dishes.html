@@ -1,0 +1,57 @@
+<div class="uk-width-1-1 uk-container-center uk-margin-large-bottom">
+    <?php if (isset($_SESSION['slim.flash']['menu_dishes_error'])): ?>
+        <div class="uk-alert uk-alert-danger">
+            I seguenti piatti non sono stati inseriti correttamente.
+            Potrebbero essere già presenti o potrebbero essere stati inseriti input non validi
+            <ul>
+                <?php foreach ($_SESSION['slim.flash']['menu_dishes_error'] as $id): ?>
+                    <li><?= $dishes[array_search($id, array_column($dishes, 'piatto_id'))]['titolo'] ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php elseif (isset($_SESSION['slim.flash']['success_message'])): ?>
+        <div id="success" class="uk-alert uk-alert-success"><?= $_SESSION['slim.flash']['success_message'] ?></div>
+    <?php endif; ?>
+
+    <form class="uk-form uk-form-horizontal" method="post" action="<?= $url_for('set_menu_dishes') ?>">
+        <div class="uk-form-row uk-text-center">
+            Giorno per cui si vuole impostare il menu
+            <div class="uk-form-icon uk-margin-left">
+                <i class="uk-icon-calendar"></i><input type="date" name="date" placeholder="aaaa-mm-gg" required>
+            </div>
+        </div>
+
+        <ul class="uk-grid uk-margin-large-top uk-margin-bottom" data-uk-grid-margin>
+            <?php foreach ($dishes as $dish): ?>
+                <li class="uk-width-medium-1-4">
+                    <div class="uk-panel uk-panel-box">
+                        <div class="uk-panel-badge uk-badge"><i class="uk-icon-clock-o"></i> <?= $dish['tempo_preparazione'] ?> min</div>
+                        <div class="uk-panel-teaser uk-text-center">
+                            <img class="uk-width-1-1" src="<?= $root_url; ?>/images/<?= $dish['foto'] ?>" alt="<?= $dish['titolo'] ?>">
+                        </div>
+                        <div class="uk-panel-title">
+                            <label class="uk-display-block">
+                                <input type="checkbox" name="selected[]" value="<?= $dish['piatto_id'] ?>">
+                                <?= $dish['titolo'] ?>
+                            </label>
+                        </div>
+                        <p><?= $dish['descrizione'] ?></p>
+
+                        <div class="uk-form-icon uk-width-1-1">
+                            <i class="uk-icon-shopping-basket"></i>
+                            <input class="uk-width-1-1" type="number" min="1" name="dish[<?= $dish['piatto_id'] ?>][amount]" placeholder="Quantità">
+                        </div>
+                        <div class="uk-form-icon uk-width-1-1">
+                            <i class="uk-icon-eur"></i>
+                            <input class="uk-width-1-1" type="text" name="dish[<?= $dish['piatto_id'] ?>][price]" placeholder="Prezzo (es: 14.99)">
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <div class="uk-form-row uk-align-right">
+            <button class="uk-button uk-button-primary" type="submit">Salva</button>
+        </div>
+    </form>
+</div>

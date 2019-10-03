@@ -1,0 +1,74 @@
+<div class="uk-width-1-2 uk-container-center">
+    <?php if (isset($_SESSION['slim.flash']['error_message'])): ?>
+        <div class="uk-alert uk-alert-danger"><?= $_SESSION['slim.flash']['error_message'] ?></div>
+    <?php elseif (isset($_SESSION['slim.flash']['success_message'])): ?>
+        <div id="success" class="uk-alert uk-alert-success"><?= $_SESSION['slim.flash']['success_message'] ?></div>
+    <?php endif; ?>
+
+    <div class="uk-text-center">
+        <button id="add-dish-button" class="uk-button uk-button-success" data-uk-toggle="{target: '#add-dish, #add-dish-button, #success'}">
+            <i class="uk-icon-plus"></i>
+            Nuovo piatto
+        </button>
+    </div>
+
+    <form id="add-dish" class="uk-form uk-form-horizontal uk-hidden uk-animation-fade" method="post" action="<?= $url_for('add_dish') ?>" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Aggiungi piatto</legend>
+
+            <div class="uk-form-row">
+                <input class="uk-width-1-1" type="text" name="title" placeholder="Titolo" required>
+            </div>
+
+            <div class="uk-form-row">
+                <div class="uk-form-icon uk-width-1-1">
+                    <i class="uk-icon-clock-o"></i>
+                    <input class="uk-width-1-1" type="number" min="1" name="prep_time" placeholder="Tempo di preparazione (minuti)" required>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <textarea class="uk-width-1-1" name="desc" placeholder="Descrizione"></textarea>
+            </div>
+
+            <div class="uk-form-row">
+                <span class="uk-form-label">Complessità</span>
+                <div class="uk-form-controls uk-form-controls-text">
+                    <label class="uk-margin-right"><input type="radio" name="complexity" value="1" required> 1</label>
+                    <label class="uk-margin-right"><input type="radio" name="complexity" value="2"> 2</label>
+                    <label class="uk-margin-right"><input type="radio" name="complexity" value="3"> 3</label>
+                    <label class="uk-margin-right"><input type="radio" name="complexity" value="4"> 4</label>
+                    <label><input type="radio" name="complexity" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <span class="uk-form-label">Foto</span>
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input type="file" name="picture" required>
+                </div>
+            </div>
+
+            <div class="uk-form-row uk-align-right">
+                <button class="uk-button uk-button-primary" type="submit">Aggiungi</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class="uk-width-1-1 uk-container-center uk-margin-large-top uk-margin-large-bottom">
+    <ul class="uk-grid" data-uk-grid-margin>
+        <?php foreach ($dishes as $dish): ?>
+            <li class="uk-width-medium-1-4">
+                <div class="uk-panel uk-panel-box">
+                    <div class="uk-panel-badge uk-badge"><i class="uk-icon-clock-o"></i> <?= $dish['tempo_preparazione'] ?> min</div>
+                    <div class="uk-panel-teaser uk-text-center">
+                        <img class="uk-width-1-1" src="<?= $root_url; ?>/images/<?= $dish['foto'] ?>" alt="<?= $dish['titolo'] ?>">
+                    </div>
+                    <div class="uk-panel-title"><?= $dish['titolo'] ?></div>
+                    <p><?= $dish['descrizione'] ?></p>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
