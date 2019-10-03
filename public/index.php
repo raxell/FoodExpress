@@ -1,5 +1,16 @@
 <?php
 
+// Quick and dirty static file server using php built in server
+if (php_sapi_name() == 'cli-server') {
+    $extensions = array('php', 'jpg', 'css', 'js', 'otf', 'ttf', 'woff', 'woff2');
+    $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    if (in_array($ext, $extensions)) {
+        return false;
+    }
+}
+
 session_start();
 
 $appRootDir = dirname(__DIR__);
