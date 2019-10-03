@@ -4,8 +4,7 @@ session_start();
 
 $appRootDir = dirname(__DIR__);
 
-require_once "{$appRootDir}/vendor/slim/Slim/Slim.php";
-\Slim\Slim::registerAutoloader();
+require_once "{$appRootDir}/vendor/autoload.php";
 
 require_once "{$appRootDir}/app/utils/LayoutView.php";
 
